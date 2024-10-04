@@ -21,4 +21,4 @@ else if(!authentication && authStatus !== authentication){
   
 }
 
-export export default  AuthLayout
+export export default  AuthLayout()
