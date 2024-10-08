@@ -1,24 +1,32 @@
-import {useEffect,useState} from 'react'
-import { useSelector } from 'react-redux'
-import {useNavigate} from './react-router-dom'
+import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import PropTypes from "prop-types";
 
- export default function Protected({childern,authentication = true}) {
+export default function Protected({ children, authentication = true }) {
+  const navigate = useNavigate();
+  const [loader, setLoader] = useState(false); // Initialize loader as false
+  const authStatus = useSelector((state) => state.auth.status);
 
-cosnt navigate = useNavigate();
-const [loader, setLoader] = useState();
-const authStatus = useSelector(state=> state.auth.status)
+  useEffect(() => {
+    //TODO make it more easy to understand
+    // Simulating a loader (optional: adjust based on your needs)
+    // setLoader(true);
+    // setTimeout(() => setLoader(false), 500); // Simulate loading for 500ms
 
-useEffect(()=>{
-  false && flase
-if(authentication && authStatus !== authentication)
-{navigate('/login')}
-else if(!authentication && authStatus !== authentication){
-  navigate('/')
+    if (authentication && authStatus !== authentication) {
+      navigate("/login");
+    } else if (!authentication && authStatus !== authentication) {
+      navigate("/");
+    }
+    setLoader(false);
+  }, [authStatus, navigate, authentication]);
+
+  return loader ? <h1>Loading...</h1> : <>{children}</>;
 }
-},[authStatus,navigate,authentication])
 
-  return loader ? <h1>Loading...</h1>: <>{childern}</>
-  
-}
-
-export export default  AuthLayout()
+// Prop validation using prop-types
+Protected.propTypes = {
+  children: PropTypes.node.isRequired,
+  authentication: PropTypes.bool,
+};
