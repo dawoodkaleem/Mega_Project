@@ -771,6 +771,7 @@ function PostForm({ post }) {
   //   return "";
   // }, []);
 
+  console.log("Where is ");
   React.useEffect(() => {
     const subscription = watch((value, { name }) => {
       if (name === "title") {
